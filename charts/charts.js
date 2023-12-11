@@ -13,11 +13,11 @@ document.addEventListener('DOMContentLoaded', function () {
     // Function to toggle between scatter plot and bubble chart
     function toggleCharts(chartType) {
         if (chartType === 'scatter') {
-            document.getElementById('scatterPlotContainer').style.display = 'block';
-            document.getElementById('bubbleContainer').style.display = 'none';
+            document.getElementById('pivotTableChart').style.display = 'block';
+            document.getElementById('verticalBarChart').style.display = 'none';
         } else if (chartType === 'bubble') {
-            document.getElementById('scatterPlotContainer').style.display = 'none';
-            document.getElementById('bubbleContainer').style.display = 'block';
+            document.getElementById('pivotTableChart').style.display = 'none';
+            document.getElementById('verticalBarChart').style.display = 'block';
         }
     }
 });

@@ -27,12 +27,14 @@ d3.csv("top_100_youtubers.csv").then(function (data) {
     // Create the chart using top10Countries instead of countsArray
     const svg = d3.select("#verticalBarChart")
         .append("svg")
-        .attr("width", 800)
-        .attr("height", 600);
-        
-    const margin = { top: 20, right: 20, bottom: 30, left: 80 };
-    const width = 800 - margin.left - margin.right;
-    const height = 400 - margin.top - margin.bottom;
+        .attr("width", '100%')
+        .attr("height", '100%')
+        .attr('preserveAspectRatio', 'xMinYMin')
+        .attr('viewBox', '0 0 600 400')
+
+    const margin = { top: 30, right: 20, bottom: 60, left: 50 };
+    const width = 600;
+    const height = 400;
 
     // Define graph title
     svg.append("text")
@@ -44,7 +46,7 @@ d3.csv("top_100_youtubers.csv").then(function (data) {
     // Define left axis title
     svg.append("text")
         .attr("transform", "rotate(-90)")
-        .attr("y", margin.left * 0.4)
+        .attr("y", margin.left * 0.05)
         .attr("x", 0 - (height / 2))
         .attr("dy", "1em")
         .style("text-anchor", "middle")
@@ -53,28 +55,26 @@ d3.csv("top_100_youtubers.csv").then(function (data) {
 
     // Define x axis title
     svg.append("text")
-        .attr("x", width / 2 + margin.left)
-        .attr("y", height + margin.top)
-        .style("text-anchor", "middle")
-        .style("font-size", "14px")
+        .attr("x", 250)
+        .attr("y", 400)
+        .attr("text-anchor", "middle")
+        .attr("font-size", "12px")
+        .text("Likes")
         .text("Country");
 
-    // Define the handleBarClick function
     function handleBarClick(d) {
         const clickedBar = d3.select(this);
         const clickedCountry = d.country;
 
-        // Set opacity for clicked bar to full visibility
-        clickedBar.attr("opacity", 1);
+        // Reset opacity for all bars
+        svg.selectAll(".bar").attr("opacity", 0.5);
 
-        // Reduce opacity for all other bars except the clicked one
-        svg.selectAll(".bar")
-            .filter(barData => barData.country !== clickedCountry)
-            .attr("opacity", 0.5);
+        // Highlight the clicked bar
+        clickedBar.attr("opacity", 1).attr("fill", "orange");
     }
 
-    svg.attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom);
+    //svg.attr("width", width + margin.left + margin.right)
+    // .attr("height", height + margin.top + margin.bottom);
 
     const x = d3.scaleBand()
         .range([margin.left, width - margin.right])
@@ -113,10 +113,14 @@ d3.csv("top_100_youtubers.csv").then(function (data) {
             d3.select(this)
                 .attr("stroke", "lightgray")
                 .attr("stroke-width", "2px");
+
+            const tooltipWidth = tooltip.node().offsetWidth;
+            const tooltipHeight = tooltip.node().offsetHeight;
+
             tooltip.style("opacity", 1)
                 .html(`Count: ${d.count}`)
-                .style("left", (d3.event.pageX) + "px")
-                .style("top", (d3.event.pageY - 28) + "px");
+                .style("left", (d3.event.pageX + 10) + "px") // Offset from the mouse pointer
+                .style("top", (d3.event.pageY - tooltipHeight - 10) + "px"); // Above the mouse pointer
         })
         .on("mouseout", function () {
             d3.select(this)

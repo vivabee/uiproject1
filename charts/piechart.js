@@ -1,4 +1,4 @@
-//PIE CHART STARTS HERE//
+  //PIE CHART STARTS HERE//
 // Function to create the pie chart
 function createPieChart(data) {
     // Fixed width for the chart
@@ -44,6 +44,7 @@ function createPieChart(data) {
         .append("path")
         .attr("d", arc)
         .attr("fill", function(_, i) { return colors[i % colors.length]; });
+        
 
      // Add ticks and tick labels
      var outerRadius = radius - 25; // Adjust the outer radius for ticks
@@ -78,6 +79,25 @@ function createPieChart(data) {
             return percentage.toFixed(1) + "%";
         });
 
+        
+    // Initialize the tooltip
+        var tip = d3.tip()
+            .attr('class', 'd3-tip')
+            .offset([0, 10])
+            .html(function(d) {
+                var percentage = ((d.endAngle - d.startAngle) / (2 * Math.PI)) * 100;
+        return `${d.data.key}: ${percentage.toFixed(2)}%`;
+            });
+
+        // Call the tooltip on the path elements
+        svg.call(tip);
+
+        // Add event listeners to show/hide the tooltip
+        path.on('mouseover', tip.show)
+            .on('mouseout', tip.hide);
+    
+
+
     // Legends and text styling
     const legend = svg.append("g")
         .attr("transform", `translate(${radius + 20}, -${radius})`)
@@ -110,6 +130,7 @@ function createPieChart(data) {
         .attr("height", legendHeight)
         .style("fill", "none");
 }
+
 
 // Fetch data from CSV and create the pie chart
 d3.csv("top_100_youtubers.csv").then(function(data) {

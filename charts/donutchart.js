@@ -77,6 +77,24 @@ function createDonutChart(data) {
             var percentage = ((d.endAngle - d.startAngle) / (2 * Math.PI)) * 100;
             return percentage.toFixed(1) + "%";
         });
+
+
+        // Initialize the tooltip
+var tip = d3.tip()
+    .attr('class', 'd3-tip')
+    .offset([0, 10])
+    .html(function (d) {
+        var percentage = ((d.endAngle - d.startAngle) / (2 * Math.PI)) * 100;
+        return `${d.data.key}: ${percentage.toFixed(2)}%`;
+    });
+
+// Call the tooltip on the path elements
+svg.call(tip);
+
+// Add event listeners to show/hide the tooltip
+path.on('mouseover', tip.show)
+    .on('mouseout', tip.hide);
+
         
     // Legends and text styling
     const legend = svg.append("g")
@@ -118,8 +136,3 @@ d3.csv("top_100_youtubers.csv").then(function(data) {
     // Handle error loading data
     console.error("Error loading data:", error);
 });
-
-
-//Donut Chart ENDS HERE //
-//--------------------------------------------------------------------------------------------//
- 

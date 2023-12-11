@@ -1,10 +1,10 @@
 // ----- Line Chart -----
 
-const linemargin = { top: 30, right: 30, bottom: 30, left: 30 };
+const linemargin = { top: 60, right: 30, bottom: 20, left: 30 };
 const linewidth = 800
 const lineheight = 400
 
-const svg = d3.select("#linechart")
+const svgLine = d3.select("#linechart")
     .append("svg")
     .attr("width", "100%") // Make the width 100%
     .attr("height", "100%") // Make the height 100%
@@ -36,7 +36,7 @@ d3.csv("avg_view_every_year.csv").then(data => {
         .extent([[0, 0], [linewidth, lineheight]])
         .on("end", brushed);
 
-    svg.append("g")
+    svgLine.append("g")
         .call(brush);
 
     // Function brushed
@@ -46,7 +46,7 @@ d3.csv("avg_view_every_year.csv").then(data => {
 
             // Update the style of the selected data
             Object.keys(data[0]).slice(1).forEach(channel => {
-                svg.selectAll(`.${channel}-line`)
+                svgLine.selectAll(`.${channel}-line`)
                     .style("stroke", d => (d.Year >= selectedYears[0] && d.Year <= selectedYears[1]) ? "red" : color(channel));
             });
         }
@@ -54,7 +54,7 @@ d3.csv("avg_view_every_year.csv").then(data => {
 
 
     Object.keys(data[0]).slice(1).forEach(channel => {
-        svg.append("path")
+        svgLine.append("path")
             .data([data])
             .attr("class", `${channel}-line`)
             .style("stroke", color(channel))
@@ -63,7 +63,7 @@ d3.csv("avg_view_every_year.csv").then(data => {
             .style("stroke-dasharray", "5,5")
             .attr("d", line.y(d => y(d[channel])).defined(d => !isNaN(d[channel])));
 
-        svg.selectAll(`.${channel}-label`)
+        svgLine.selectAll(`.${channel}-label`)
             .data(data)
             .enter().append("text")
             .attr("class", `${channel}-label`)
@@ -74,7 +74,7 @@ d3.csv("avg_view_every_year.csv").then(data => {
             .attr("text-anchor", "middle")
             .style("fill", color(channel));
 
-        svg.selectAll(`.${channel}-circle`)
+        svgLine.selectAll(`.${channel}-circle`)
             .data(data)
             .enter().append("circle")
             .attr("class", `${channel}-circle`)
@@ -93,11 +93,11 @@ d3.csv("avg_view_every_year.csv").then(data => {
             });
     });
 
-    svg.append("g")
+    svgLine.append("g")
         .attr("transform", `translate(0, ${lineheight})`)
         .call(d3.axisBottom(x).ticks(6).tickFormat(d3.format("d")));
 
-    svg.append("g")
+    svgLine.append("g")
         .call(d3.axisLeft(y).tickValues([0, 20000000, 40000000, 60000000]).tickFormat(d3.format(".2s")))
         .append("text")
         .attr("transform", "rotate(-90)")
@@ -107,7 +107,7 @@ d3.csv("avg_view_every_year.csv").then(data => {
         .text("Views");
 
     // Add legend
-    const legend = svg.append("g")
+    const legend = svgLine.append("g")
         .attr("transform", `translate(0, -20)`)
         .selectAll("g")
         .data(Object.keys(data[0]).slice(1).reverse())
