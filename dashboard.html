@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Carter+One&family=Poppins:wght@400;700&display=swap"
         rel="stylesheet">
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.9.1/d3-tip.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="./charts/charts.js"></script>
@@ -59,7 +60,7 @@
                 <script src="./charts/pivot_table_dropdown.js"></script>
             </div>
 
-            <!-- Pie and Bubble Chart -->
+            <!-- Pie and Donut Chart -->
             <div class="chart-container" id="chartSelectionButtons">
                 <h2>Top 100 DailyTube Channels</h2>
                 <button onclick="showChart('pieChartContainer')">Pie Chart</button>
@@ -82,32 +83,42 @@
             <!-- Scatter Plot  & Bubble Chart-->
             <div class="chart-container">
                 <h2>Likes vs. Subscribers on DailyTube</h2>
-
-                <label>
-                    <input type="radio" name="chartType" value="scatter" checked> Scatter Plot
-                </label>
-
-                <label>
-                    <input type="radio" name="chartType" value="bubble"> Bubble Chart
-                </label>
-
-                <div class="chart-container" id="scatterPlotContainer">
-                    <img src="images/scatter-plot.png" alt="Scatter Plot Image" />
+                <div  id="scatterPlotContainer">
                     <!-- Scatter Plot content goes here -->
+                    <script src="./charts/scatterPlot.js"></script>
+                    
                 </div>
 
-                <div class="chart-container" id="bubbleContainer" style="display: none;">
-                    <img src="images/bubble.png" alt="Bubble Chart Image" />
-                    <!-- Bubble Chart content goes here -->
+                <div  id="bubbleBarChart" >
+                <!-- Bubble Chart content goes here -->
+                 <script src="./charts/bubblechart.js"></script>
                 </div>
             </div>
 
             <!-- Table Chart (Pivot with Heatmap) -->
-            <div class="chart-container" id="pivotTableChart">
+            <div class="chart-container">
                 <h2>Number of DailyTubers by Country</h2>
+          
+
+                <label>
+                    <input type="radio" name="chartType" value="scatter" checked> Table
+                </label>
+
+                <label>
+                    <input type="radio" name="chartType" value="bubble"> Vertical Chart
+                </label>
+            <div id="pivotTableChart">
+       
                 <script src="./charts/pivot_table.js"></script>
                 <!-- Chart content goes here -->
             </div>
+                <!-- Vertical Chart -->
+            <div id="verticalBarChart" style="display: none;">
+                <script src="./charts/verticalBarChart.js"></script>
+                <!-- Chart content goes here -->
+            </div>
+            </div>
+            
 
             <!-- Line Chart -->
             <div class="chart-container" id="linechart">
@@ -123,19 +134,14 @@
             </div>
 
             <!-- Horizontal Chart -->
-            <div class="chart-container" id="bar-chart">
+            <div class="chart-container" id="horizontalBarChart">
                 <h2>Most Popular DailyTube Category
                     by Followers</h2>
                     <script src="./charts/horizontalBarChart.js"></script>
                 <!-- Chart content goes here -->
             </div>
 
-            <!-- Vertical Chart -->
-            <div class="chart-container" id="verticalBarChart">
-                <h2>Country with Most DailyTubers in Top 100</h2>
-                <script src="./charts/verticalBarChart.js"></script>
-                <!-- Chart content goes here -->
-            </div>
+        
 
     </section>
 

@@ -101,6 +101,7 @@ h2 {
 
 }
 
+
 input[type="radio"] {
     display: inline;
     margin-right: 5px;
@@ -135,6 +136,39 @@ input[type="dropdown"] {
 
 }
 
+.legend {
+    font-size: 12px;
+    fill: #000;
+}
+
+.tooltip {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 8px;
+    border-radius: 4px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.d3-tip {
+line-height: 1;
+font-weight: bold;
+padding: 10px;
+background: rgba(0, 0, 0, 0.8);
+color: #fff;
+border-radius: 5px;
+font-size: 12px;
+}
+
+    /* Add your CSS styling here */
+    .axis path,
+    .axis line {
+      fill: none;
+      stroke: #000;
+      shape-rendering: crispEdges;
+    }
+
 table {
     border-collapse: collapse;
     width: 100%;
@@ -158,12 +192,6 @@ th {
 }
 
 /* Linechart */
-#linechart {
-    border: 2px solid #ccc;
-    /* Set border style, color, and width */
-    border-radius: 10px;
-    /* Set border radius for rounded corners */
-}
 
 /* This is brush for linear chart*/
 .brush rect.extent {
@@ -197,12 +225,6 @@ th {
   }
 
 /* stackedchart */
-#stackedchart {
-    border: 2px solid #ccc;
-    /* Set border style, color, and width */
-    border-radius: 10px;
-    /* Set border radius for rounded corners */
-}
 
 .tooltip {
     position: absolute;
@@ -212,24 +234,6 @@ th {
     border-radius: 3px;
     font-size: 18px;
 }
-
-
-   /* Style the bars */
-   .bar {
-    fill: #FFBC58;
-}
-
-.highlight {
-    fill: lightgray;
-    stroke-width: 2px;
-}
-
-/* Style the axis */
-.axis text {
-    font-size: 12px;
-}
-
-
 
 img {
     max-width: 50%;

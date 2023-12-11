@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>D3.js Bubble Chart with Axes</title>
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <style>
+    /* Add your CSS styling here */
+    .axis path,
+    .axis line {
+      fill: none;
+      stroke: #000;
+      shape-rendering: crispEdges;
+    }
+  </style>
+</head>
+<body>
+
+<div id="bubbleBarChart"></div>
+
+<script>
+  // Set up the dimensions of the chart
+  const margin = { top: 20, right: 20, bottom: 50, left: 50 };
+  const width = 800 - margin.left - margin.right;
+  const height = 600 - margin.top - margin.bottom;
+
+  // Colors based on the specified scheme
+  const colors = [
+    "#FFBC58", "#947359", "#CC935E", "#FFED75",
+    "#FC9765", "#D1BE9F", "#FFE5BB"
+  ];
+
+  // Select the bubbleBarChart div and create an SVG container
+  const svg = d3.select("#bubbleBarChart")
+    .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", `translate(${margin.left},${margin.top})`);
+
+  // Load the CSV data
+  d3.csv("top_100_youtubers.csv").then(data => {
+    // Convert string numbers to numeric values
+    data.forEach(d => {
+      d.followers = +d.followers;
+      d.likes = +d.Likes;
+    });
+
+    // Create scales for the bubble sizes and x, y axes
+    const radiusScale = d3.scaleSqrt()
+      .domain([0, d3.max(data, d => d.followers)])
+      .range([5, 50]);
+
+    const xScale = d3.scaleLinear()
+      .domain([0, d3.max(data, d => d.likes)])
+      .range([0, width]);
+
+    const yScale = d3.scaleLinear()
+      .domain([0, d3.max(data, d => d.followers)])
+      .range([height, 0]);
+
+    // Create x and y axes
+    const xAxis = d3.axisBottom(xScale);
+    const yAxis = d3.axisLeft(yScale);
+
+    // Append x and y axes to the SVG
+    svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", `translate(0, ${height})`)
+      .call(xAxis)
+      .append("text")
+      .attr("class", "label")
+      .attr("x", width)
+      .attr("y", -6)
+      .style("text-anchor", "end")
+      .text("Likes");
+
+    svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+      .append("text")
+      .attr("class", "label")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("Followers");
+
+    // Create the bubbles
+    svg.selectAll("circle")
+      .data(data)
+      .enter()
+      .append("circle")
+      .attr("cx", d => xScale(d.likes))
+      .attr("cy", d => yScale(d.followers))
+      .attr("r", d => radiusScale(d.followers))
+      .attr("fill", (d, i) => colors[i % colors.length]) // Cycle through colors
+      .attr("opacity", 0.7)
+      .on("mouseover", showTooltip)
+      .on("mouseout", hideTooltip);
+
+    // Add tooltip functionality
+    function showTooltip(d) {
+      const tooltip = d3.select("body").append("div")
+        .attr("class", "tooltip")
+        .style("position", "absolute")
+        .style("background-color", "#f4f4f4")
+        .style("padding", "10px")
+        .style("border", "1px solid #ddd")
+        .style("border-radius", "5px")
+        .style("pointer-events", "none")
+        .html(`<strong>${d.ChannelName}</strong><br>Followers: ${d.followers}<br>Likes: ${d.likes}`);
+
+      const [x, y] = d3.mouse(this);
+
+      tooltip.style("left", x + "px")
+        .style("top", y + "px");
+    }
+
+    function hideTooltip() {
+      d3.select(".tooltip").remove();
+    }
+  });
+</script>
+
+</body>
+</html>
