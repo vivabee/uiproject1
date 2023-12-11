@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="header.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Carter+One&family=Poppins:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+
+
+
+    <title>Dashboard</title>
+</head>
+
+<body>
+    <header>
+        <div id="header-navbar">
+            <div id="branding">
+                <img src="./images/logo.png" alt="DailyTube logo" id="logo"></a>
+                <h1 span id="company-name" href="index.html">DailyTube Dashboard</h1>
+            </div>
+            <nav id="header-nav">
+                <ul>
+                    <li><a href="index.html">Pattern Library</a></li>
+                    <li><a href="dashboard.html">Dashboard</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section>
+
+        <!-- Score Cards -->
+        <div class="scorecard-container">
+            <script src="./charts/scoreboards.js"></script>
+        </div>
+        <!-- Charts -->
+        <div class="flex-container">
+            <div class="chart-container" id="topsubscriber">
+                <h2>Most Subscribed DailyTube Channel</h2>
+                <div id="topSubscribedChart"></div>
+                <script src="./charts/mostsubscribed.js"></script>
+            </div>
+
+            <!-- Single Value Charts (TopSubscribed and Pivot with Dropdown) -->
+            <div class="chart-container">
+                <h2>Filter by Country: Number of DailyTubers </h2>
+                <div class="dropdown-container" id="pivotDropdownChart">
+                    <label for="countryDropdownpivotDropdownChart" class="dropdown-label">Select Country:</label>
+                    <select id="countryDropdownpivotDropdownChart" class="dropdown-select">
+                        <!-- Add options here -->
+                    </select>
+                </div>
+                <div id="pivotDropdownChartTable"></div>
+                <script src="./charts/pivot_table_dropdown.js"></script>
+            </div>
+
+            <!-- Pie and Bubble Chart -->
+            <div class="chart-container" id="chartSelectionButtons">
+                <h2>Top 100 DailyTube Channels</h2>
+                <button onclick="showChart('pieChartContainer')">Pie Chart</button>
+                <button onclick="showChart('donutChartContainer')">Donut Chart</button>
+
+                <!-- Pie chart -->
+                <div id="pieChartContainer">
+                    <script src="./charts/piechart.js"></script>
+                    <!-- Pie chart content goes here -->
+                </div>
+
+                <!-- Donut chart -->
+                <div id="donutChartContainer" style="display: none;">
+                    <script src="./charts/donutchart.js"></script>
+                    <!-- Donut chart content goes here -->
+                </div>
+            </div>
+
+
+            <!-- Scatter Plot  & Bubble Chart-->
+            <div class="chart-container">
+                <h2>Likes vs. Subscribers on DailyTube</h2>
+
+                <label>
+                    <input type="radio" name="chartType" value="scatter" checked> Scatter Plot
+                </label>
+
+                <label>
+                    <input type="radio" name="chartType" value="bubble"> Bubble Chart
+                </label>
+
+                <div class="chart-container" id="scatterPlotContainer">
+                    <img src="images/scatter-plot.png" alt="Scatter Plot Image" />
+                    <!-- Scatter Plot content goes here -->
+                </div>
+
+                <div class="chart-container" id="bubbleContainer" style="display: none;">
+                    <img src="images/bubble.png" alt="Bubble Chart Image" />
+                    <!-- Bubble Chart content goes here -->
+                </div>
+            </div>
+
+            <!-- Table Chart (Pivot with Heatmap) -->
+            <div class="chart-container" id="pivotTableChart">
+                <h2>Number of DailyTubers by Country</h2>
+                <script src="./charts/pivot_table.js"></script>
+                <!-- Chart content goes here -->
+            </div>
+
+            <!-- Line Chart -->
+            <div class="chart-container" id="linechart">
+                <h2>Top 5 DailyTube Channels Yearly View Trends</h2>
+                <script src="./charts/linechart.js"></script>
+            </div>
+
+            <!--Stacked Chart -->
+            <div class="chart-container" id="stackedchart">
+                <h2>Top 5 DailyTube Channels Quarterly Income </h2>
+                <script src="./charts/stacked_chart.js"></script>
+                <!-- Chart content goes here -->
+            </div>
+
+            <!-- Horizontal Chart -->
+            <div class="chart-container" id="horizontalBarChart">
+                <h2>Most Popular DailyTube Category
+                    by Followers</h2>
+                    <script src="./charts/horizontalBarChart.js"></script>
+                <!-- Chart content goes here -->
+            </div>
+
+            <!-- Vertical Chart -->
+            <div class="chart-container" id="verticalBarChart">
+                <h2>Country with Most DailyTubers in Top 100</h2>
+                <script src="./charts/verticalBarChart.js"></script>
+                <!-- Chart content goes here -->
+            </div>
+
+    </section>
+
+</body>
+
+</html>
